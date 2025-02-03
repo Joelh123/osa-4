@@ -97,7 +97,8 @@ describe('favorite blog', () => {
                 url: 'https://homepages.cwi.nl/~storm/teaching/reader/Dijkstra68.pdf',
                 likes: 5,
                 __v: 0
-        })
+            }
+        )
     })
 
     test('return most liked blog from all blogs', () => {
@@ -109,8 +110,9 @@ describe('favorite blog', () => {
                 author: "Edsger W. Dijkstra",
                 url: "http://www.cs.utexas.edu/~EWD/transcriptions/EWD08xx/EWD808.html",
                 likes: 12,
-                __v: 0 
-        })
+                __v: 0
+            } 
+        )
     })
 })
 
@@ -122,6 +124,30 @@ describe('most blogs by author', () => {
             {
                 author: 'Robert C. Martin',
                 blogs: 3
-        })
+            }
+        )
+    })
+
+    test('find author with most blogs from a list with one object', () => {
+        const result = listHelper.mostBlogs(listWithOneBlog)
+        assert.deepStrictEqual(result, 
+            {  
+                author: 'Edsger W. Dijkstra',
+                blogs: 1
+            }
+        )
+    })
+})
+
+describe('most liked author', () => {
+    
+    test('author with the most likes', () => {
+        const result = listHelper.mostLikes(blogs)
+        assert.deepStrictEqual(result, 
+            {
+                author: 'Edsger W. Dijkstra',
+                likes: 17
+            }
+        )
     })
 })
