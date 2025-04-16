@@ -65,6 +65,14 @@ test('a blog can be deleted', async () => {
         .expect(204)
 })
 
+test('id is formatted correctly', async () => {
+    const response = await api.get('/api/blogs')
+
+    const blogs = response.body.map(blog => Object.keys(blog))
+    
+    assert(blogs.map(blog => blog.includes("id")))
+})
+
 after(async () => {
     await mongoose.connection.close()
 })
