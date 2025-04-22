@@ -73,6 +73,24 @@ test('id is formatted correctly', async () => {
     assert(blogs.map(blog => blog.includes("id")))
 })
 
+test('if likes property is missing default to 0', async () => {
+    const newBlog = {
+        title: "Uusi",
+        author: "John Doe",
+        url: "google.com",
+    }
+
+    await api
+    .post('/api/blogs')
+    .send(newBlog)
+    .expect(201)
+    .expect('Content-Type', /application\/json/)
+
+    const blogsAtEnd = await helper.blogsInDb()
+    const blogs = blogsAtEnd.map(blog => blog)
+    assert(blogs.at(-1).likes === 0)
+})
+
 after(async () => {
     await mongoose.connection.close()
 })
