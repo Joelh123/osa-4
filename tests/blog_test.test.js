@@ -81,14 +81,26 @@ test('if likes property is missing default to 0', async () => {
     }
 
     await api
-    .post('/api/blogs')
-    .send(newBlog)
-    .expect(201)
-    .expect('Content-Type', /application\/json/)
+        .post('/api/blogs')
+        .send(newBlog)
+        .expect(201)
+        .expect('Content-Type', /application\/json/)
 
     const blogsAtEnd = await helper.blogsInDb()
     const blogs = blogsAtEnd.map(blog => blog)
     assert(blogs.at(-1).likes === 0)
+})
+
+test('blogs with missing titles or urls return status 400', async () => {
+    const newBlog = {
+        title: "somethingsomething",
+        author: "Jane Doe",
+        likes: 20
+    }
+
+    await api
+        .post('/api/blogs')
+        .expect(400)
 })
 
 after(async () => {
