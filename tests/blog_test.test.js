@@ -60,6 +60,25 @@ describe('when there is initially some blogs saved', () => {
         assert(titles.includes('Uusi'))
     })
 
+    test('a blog can be updated', async () => {
+        const initialBlogsDB = await api.get('/api/blogs')
+        const blogs = initialBlogsDB.body.map(blog => blog)
+
+        const updatedBlog = {
+            title: blogs[0].title,
+            author: blogs[0].author,
+            url: blogs[0].url,
+            likes: blogs[0].likes + 1
+        }
+
+        await api
+            .put(`/api/blogs/${blogs[0].id}`)
+            .send(updatedBlog)
+            .expect(201)
+
+        assert((helper.initialBlogs[0].likes + 1) === updatedBlog.likes)
+    })
+
     test('a blog can be deleted', async () => {
         await api
             .delete('/api/blogs/67f8ac479cb3cd6e3bf25233')
