@@ -1,9 +1,8 @@
-POST http://localhost:3003/api/blogs
+POST http://localhost:3003/api/users
 Content-Type: application/json
 
 {
-    "title": "Joet",
-    "author": "Joel Jokinen",
-    "url": "anything.com",
-    "likes": 0
+    "username": "korppikotka",
+    "name": "Kalevi Korppinen",
+    "password": "Kotka3"
 }
