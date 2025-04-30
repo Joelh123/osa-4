@@ -1,0 +1,10 @@
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+
+{
+    "title": "Joet",
+    "author": "Joel Jokinen",
+    "url": "anything.com",
+    "likes": 0,
+    "userId": "680f5bb2a76b109ac65bf46c"
+}
