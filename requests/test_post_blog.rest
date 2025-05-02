@@ -1,10 +1,10 @@
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImtvcnBwaWtvdGthIiwiaWQiOiI2ODExZWFlMWM5OGNlMDVhNjcyZWQ2ZjkiLCJpYXQiOjE3NDYxNzY2MDJ9.YJ5SQV192PNcE0jsbuTA6xmKAjJ6N9dFpzbvzqaD8YQ
 
 {
-    "title": "Joet",
-    "author": "Joel Jokinen",
-    "url": "anything.com",
-    "likes": 0,
-    "userId": "680f5bb2a76b109ac65bf46c"
+    "title": "Koirat",
+    "author": "Urho Lab",
+    "url": "dogs.com",
+    "likes": 2
 }
