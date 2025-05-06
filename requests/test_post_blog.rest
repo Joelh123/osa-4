@@ -1,6 +1,6 @@
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImtvcnBwaWtvdGthIiwiaWQiOiI2ODExZWFlMWM5OGNlMDVhNjcyZWQ2ZjkiLCJpYXQiOjE3NDY1MTAwMDEsImV4cCI6MTc0NjUxMzYwMX0.eIs4JjI11GVhugNjTe_0nD4OKLhvm10bK-UcZRAlzUo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImtvcnBwaWtvdGthIiwiaWQiOiI2ODExZWFlMWM5OGNlMDVhNjcyZWQ2ZjkiLCJpYXQiOjE3NDY1MTU0ODUsImV4cCI6MTc0NjUxOTA4NX0.kocyfcDdm0dlgHHrpw8CGMH2OhTVAthYIzK7Uw4eEGg
 
 {
     "title": "Koirat",
