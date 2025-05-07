@@ -151,6 +151,7 @@ describe('when there is initially some blogs saved', () => {
             .set({ 
                 "Authorization": "Bearer " + TOKEN
             })
+            .send(newBlog)
             .expect(400)
     })
 
@@ -158,11 +159,13 @@ describe('when there is initially some blogs saved', () => {
         const newBlog = {
             title: "somethingsomething",
             author: "Jane Doe",
+            url: "dribyraby.com",
             likes: 20
         }
 
         await api
             .post('/api/blogs')
+            .send(newBlog)
             .expect(401)
     })
 })
