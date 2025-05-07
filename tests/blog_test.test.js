@@ -5,13 +5,29 @@ const supertest = require('supertest')
 const app = require('../app')
 const helper = require('./test_helper')
 const api = supertest(app)
+const bcrypt = require('bcrypt')
 
 const Blog = require('../models/blog')
+const User = require('../models/user')
+
+let TOKEN
 
 describe('when there is initially some blogs saved', () => {
     beforeEach(async () => {
         await Blog.deleteMany({})
+        await User.deleteMany({})
+
+        const passwordHash = await bcrypt.hash('sekret', 10)
+        const user = new User({ username: 'root', passwordHash })
     
+        await user.save()
+
+        TOKEN = (await api
+            .post('/api/login')
+            .send({ username: 'root', password: 'sekret' })
+            .expect('Content-Type', /application\/json/)
+        ).body.token
+
         const blogObjects = helper.initialBlogs
         .map(blog => new Blog(blog))
         const promiseArray = blogObjects.map(blog => blog.save())
@@ -50,6 +66,9 @@ describe('when there is initially some blogs saved', () => {
         await api
             .post('/api/blogs')
             .send(newBlog)
+            .set({ 
+                "Authorization": "Bearer " + TOKEN
+            })
             .expect(201)
             .expect('Content-Type', /application\/json/)
 
@@ -80,8 +99,14 @@ describe('when there is initially some blogs saved', () => {
     })
 
     test('a blog can be deleted', async () => {
+        const initialBlogsDB = await api.get('/api/blogs')
+        const blogs = initialBlogsDB.body.map(blog => blog)
+
         await api
-            .delete('/api/blogs/67f8ac479cb3cd6e3bf25233')
+            .delete(`/api/blogs/${blogs[0].id}`)
+            .set({ 
+                "Authorization": "Bearer " + TOKEN
+            })
             .expect(204)
     })
 
@@ -102,6 +127,9 @@ describe('when there is initially some blogs saved', () => {
 
         await api
             .post('/api/blogs')
+            .set({ 
+                "Authorization": "Bearer " + TOKEN
+            })
             .send(newBlog)
             .expect(201)
             .expect('Content-Type', /application\/json/)
@@ -120,7 +148,22 @@ describe('when there is initially some blogs saved', () => {
 
         await api
             .post('/api/blogs')
+            .set({ 
+                "Authorization": "Bearer " + TOKEN
+            })
             .expect(400)
+    })
+
+    test('adding a blog with an invalid token returns status 401', async () => {
+        const newBlog = {
+            title: "somethingsomething",
+            author: "Jane Doe",
+            likes: 20
+        }
+
+        await api
+            .post('/api/blogs')
+            .expect(401)
     })
 })
 
